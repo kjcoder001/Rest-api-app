@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',               # including the rest framework in our installed apps
+    'rest_framework.authtoken',
+    'profiles_api_app',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL='profiles_api_app.UserProfile' # tells django to use this model as default and not the original one
