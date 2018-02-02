@@ -1,0 +1,7 @@
+django==1.11
+djangorestframework==3.6.2
+Faker==0.8.10
+python-dateutil==2.6.1
+pytz==2017.3
+six==1.11.0
+text-unidecode==1.1
