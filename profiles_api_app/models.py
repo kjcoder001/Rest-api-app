@@ -1,3 +1,6 @@
+# createsuperuser details--> email=kj@gmail.com,name=kushal, password=pass1234
+
+
 from django.db import models
 
 # Create your models here.
@@ -31,7 +34,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self,name,email,password):
         """ creates and saves a new superuser(admin privileges) with given details ."""
 
-        user=self.create_user(email,name.password)
+        user=self.create_user(email,name,password)
 
         user.is_superuser=True
         user.is_staff=True
