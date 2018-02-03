@@ -1,16 +1,21 @@
 from django.shortcuts import render
 
-# Create your views here.
-# api views take care of the code that is ran when the user visits our api endpoint.
 
-from rest_framework.views import APIView
-from rest_framework.response import Response#Response object is the standard response object that we
+
+from rest_framework.views import APIView # api views take care of the code that is ran when
+ #   the user visits our api endpoint.
+
+from rest_framework.response import Response #Response object is the standard response object that we
 # return from our APIView that can be rendered  into an Api o/p
 
 from . import serializers # . implies current/root directory
 
 from rest_framework import status # list of various http response status codes like http 404,200,505 etc.
 # all these codes are described in the status module of rest_framework.
+
+from rest_framework import viewsets
+
+
 
 class HelloApiView(APIView):
     """ Test api view. """
@@ -61,3 +66,20 @@ class HelloApiView(APIView):
     def delete(self,request,pk=None):
         """ Deletes an object"""
         return Response({'method':'delete'})
+
+
+
+class HelloViewSet(viewsets.ViewSet):
+    """ Test api ViewSet"""
+
+    def list(self,request):
+        """Return a hello object. """
+
+        a_viewset=[
+        'Uses actions (list,create,retrieve,update,partial_update)',
+        'Automatically maps to urls using Routers',
+        'Provides more functionality with less code',
+        ]
+
+        return Response({'message':'Hello','a_viewset':a_viewset})
+        
