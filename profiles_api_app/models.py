@@ -59,7 +59,7 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
                                  # moreover it's required when we are overwriting the base user model
 
     USERNAME_FIELD='email' # the standarddjango model has a field called USERNAME_FIELD which acts as the username or
-                           # a handle whic is used to login etc.We have set that field to email instead of a custom username.
+                           # a handle which is used to login etc.We have set that field to email instead of a custom username.
 
     REQUIRED_FIELDS=['name'] # fields that the user must fill in to register
 
@@ -76,3 +76,19 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         """ django uses this when it needs to convert the object to a string """
         return self.email
+
+class ProfileFeedItem(models.Model):
+    """ Profile status update."""
+
+    user_profile=models.ForeignKey('UserProfile',on_delete=models.CASCADE)
+    # on_delete tells django/database what to do if the UserProfile to which the feed is linked to (via ForeignKey) itslef gets deleted
+    # i.e CASCADE tells db that if the user deletes his own profile then go on delete all his status updates,feeds etc.
+
+    status_text=models.CharField(max_length=100) # String of status a user puts on display to describe his profile
+    created_on=models.DateTimeField(auto_now_add=True) # Field for storing dates and times
+    # @param auto_now_add -->Basically says automatically set the time to now if we don't specify a time when we create an object.
+
+
+    def __str__(self):
+        """ Return model as a string. """
+        return self.status_text

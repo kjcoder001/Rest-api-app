@@ -4,7 +4,9 @@ from . import views
 
 router=DefaultRouter()
 router.register('hello-viewset',views.HelloViewSet,base_name='hello-viewset')
-router.register('profile',views.UserProfileViewSet)
+router.register('profile',views.UserProfileViewSet)# django knows implicitly about the base_name because its a ModelViewSet!
+router.register('login',views.LoginViewSet,base_name='login')# this viewset doesn't correspond to any model ViewSet
+# hence its imperative that we mention a base_name
 
 urlpatterns=[
     url(r'^hello-view$',views.HelloApiView.as_view(),name='HelloApiView'),# .as_view --> to return this view as a view object

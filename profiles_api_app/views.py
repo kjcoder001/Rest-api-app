@@ -17,7 +17,11 @@ from rest_framework.authentication import TokenAuthentication  # most popular wa
 
 from rest_framework import viewsets
 
-from rest_framework import filters
+from rest_framework import filters # to search for entries in our api
+
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken # its an APIView used to create login functionalityin the Api
+
 
 from . import serializers # . implies current/root directory
 from . import models
@@ -138,3 +142,14 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes=(permissions.UpdateOwnProfile,)
     filter_backends=(filters.SearchFilter,)  # feature to search fields by name and email
     search_fields=('name','email')
+
+
+class LoginViewSet(viewsets.ViewSet):
+    """checks email and password and returns an auth token. """
+
+    serializer_class=AuthTokenSerializer
+
+    def create(self,request):# create function is called when a http post request is made to the ViewSet
+        """Use the ObtainAuthToken APIView to validate and create a token."""
+
+        return ObtainAuthToken().post(request)
