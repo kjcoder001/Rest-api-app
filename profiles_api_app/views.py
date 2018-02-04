@@ -8,19 +8,20 @@ from rest_framework.views import APIView # api views take care of the code that 
 from rest_framework.response import Response #Response object is the standard response object that we
 # return from our APIView that can be rendered  into an Api o/p
 
-from . import serializers # . implies current/root directory
-
 from rest_framework import status # list of various http response status codes like http 404,200,505 etc.
 # all these codes are described in the status module of rest_framework.
-
-from rest_framework import viewsets
-
-from . import models
-from . import permissions
 
 from rest_framework.authentication import TokenAuthentication  # most popular way of authentication in django. It works by giving
 # the user a temporary token that it inserts in the headers of the http request . DRF can then use this token
 # to check and verify if the user has authenticated with the system.
+
+from rest_framework import viewsets
+
+from rest_framework import filters
+
+from . import serializers # . implies current/root directory
+from . import models
+from . import permissions
 
 
 
@@ -135,3 +136,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     authentication_classes=(TokenAuthentication,)
     permission_classes=(permissions.UpdateOwnProfile,)
+    filter_backends=(filters.SearchFilter,)  # feature to search fields by name and email
+    search_fields=('name','email')
