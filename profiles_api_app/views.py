@@ -15,6 +15,8 @@ from rest_framework import status # list of various http response status codes l
 
 from rest_framework import viewsets
 
+from . import models
+
 
 
 class HelloApiView(APIView):
@@ -115,3 +117,12 @@ class HelloViewSet(viewsets.ViewSet):
     def destroy(self,request,pk=None):
         """Deletes an object """
         return Response({'http_method':'delete'})
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handles creating,reading and updating user profiles"""
+    # the ModelViewSet is a special viewset in the rest_framework that taakes care of all of the logic
+    # for creating,reading and updating our model items
+
+    serializer_class=serializers.UserProfileSerializer
+    queryset=models.UserProfile.objects.all() #returns a list of all the objects(UserProfile model) in our db
+     # tells the viewset how to retrieve the objects from our database
