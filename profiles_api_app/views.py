@@ -16,6 +16,11 @@ from rest_framework import status # list of various http response status codes l
 from rest_framework import viewsets
 
 from . import models
+from . import permissions
+
+from rest_framework.authentication import TokenAuthentication  # most popular way of authentication in django. It works by giving
+# the user a temporary token that it inserts in the headers of the http request . DRF can then use this token
+# to check and verify if the user has authenticated with the system.
 
 
 
@@ -124,5 +129,9 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # for creating,reading and updating our model items
 
     serializer_class=serializers.UserProfileSerializer
+
     queryset=models.UserProfile.objects.all() #returns a list of all the objects(UserProfile model) in our db
      # tells the viewset how to retrieve the objects from our database
+
+    authentication_classes=(TokenAuthentication,)
+    permission_classes=(permissions.UpdateOwnProfile,)
