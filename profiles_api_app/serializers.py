@@ -29,3 +29,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
             user.save()
 
             return user
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    """A serializer for the feed items of the users ."""
+
+    class Meta:
+        model=models.ProfileFeedItem
+        fields=('id','user_profile','status_text','created_on')
+        extra_kwargs={'user_profile':{'read_only':True}}
+# we want to set user_profile field as read-only because we are going to set this automatically based on the user
+# that is currently logged in .We don't want users to be able to create ProfileFeedItems for other users in the system.\
